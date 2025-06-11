@@ -4,4 +4,3 @@ openai
 datasets
 tqdm
 python-dotenv
-acclerate

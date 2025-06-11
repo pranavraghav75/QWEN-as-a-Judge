@@ -2,7 +2,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 from prompts.templates import judge_prompt
 
-model_name = "Qwen/Qwen3-4B"
+model_name = "Qwen/Qwen3-1.7B"
 
 tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
 model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto", trust_remote_code=True)
