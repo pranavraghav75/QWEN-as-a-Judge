@@ -1,0 +1,7 @@
+transformers
+torch
+openai
+datasets
+tqdm
+python-dotenv
+acclerate
