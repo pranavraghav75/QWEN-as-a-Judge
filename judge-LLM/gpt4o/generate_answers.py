@@ -24,7 +24,6 @@ def get_gpt4o_answer(prompt, model="gpt-4o-mini", max_tokens=512):
 def generate_answers(samples, output_path):
     with open(output_path, "w") as out:
         for sample in tqdm(samples, desc="Generating GPT-4o Mini Answers"):
-            # Validate sample structure
             if not all(key in sample for key in ["id", "topic", "question", "solution"]):
                 print(f"Skipping invalid sample: {sample}")
                 continue

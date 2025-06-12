@@ -1,0 +1,9 @@
+{"id": "2024", "is_correct": true}
+{"id": "24", "is_correct": true}
+{"id": "2399", "is_correct": true}
+{"id": "2496", "is_correct": true}
+{"id": "2623", "is_correct": true}
+
+
+
+// go through all setup_a.jsonl entries and check if the gpt answer matches up with the solution

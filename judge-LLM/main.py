@@ -122,17 +122,14 @@ def run_experiment(test_questions, mode):
     return results
 
 def main():
-    # Load test questions
-    test_questions = load_questions(TEST_DIR, num_questions=30)
+    test_questions = load_questions(TEST_DIR, num_questions=25)
 
-    # Generate answers using GPT-4o
-    # generate_answers(test_questions, GPT_OUTPUT)
+    generate_answers(test_questions, GPT_OUTPUT)
 
-    # Load generated answers
     with open(GPT_OUTPUT, "r") as f:
         test_questions_with_answers = [json.loads(line) for line in f]
 
-    # Run Setup A (Main Evaluation)
+    # Main Evaluation
     print("Running Setup A...")
     setup_a_results = run_experiment(test_questions_with_answers, mode="A")
     print(f"Setup A results count: {len(setup_a_results)}")
@@ -141,7 +138,7 @@ def main():
             f.write(json.dumps(result) + "\n")
     print("Setup A file written.")
 
-    # Run Setup B (Control)
+    # Control
     print("Running Setup B...")
     setup_b_results = run_experiment(test_questions_with_answers, mode="B")
     print(f"Setup B results count: {len(setup_b_results)}")
@@ -150,7 +147,7 @@ def main():
             f.write(json.dumps(result) + "\n")
     print("Setup B file written.")
 
-    # Run Baseline (Solver)
+    # Baseline
     print("Running Baseline...")
     baseline_results = run_experiment(test_questions_with_answers, mode="Baseline")
     print(f"Baseline results count: {len(baseline_results)}")

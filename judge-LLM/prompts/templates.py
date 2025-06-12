@@ -13,7 +13,8 @@ def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
         2. Provide feedback on the reasoning and approach used in GPT-4o mini's answer.
         3. If GPT-4o mini's answer is incorrect or incomplete, explain the discrepancies and suggest improvements.
 
-        Provide your evaluation in a concise and structured format.
+        Evaluation:
+        State your judgement clearly and concisely, and the final evaluatoin in one of the following formats: "The answer is correct", "The answer is partially correct", or "The answer is incorrect".
         """
     elif mode == "B":  # Control
         return f"""
@@ -32,9 +33,10 @@ def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
         3. Provide feedback on the reasoning and approach used in GPT-4o mini's answer.
         4. If GPT-4o mini's answer is incorrect or incomplete, explain the discrepancies and suggest improvements.
 
-        Provide your evaluation in a concise and structured format.
+        Evaluation:
+        State your judgement clearly and concisely, and the final evaluatoin in one of the following formats: "The answer is correct", "The answer is partially correct", or "The answer is incorrect".
         """
-    elif mode == "Baseline":  # Solver
+    elif mode == "Baseline":  # Baseline
         return f"""
         You are tasked with solving the following mathematical question independently. 
         Below is the question and the correct solution.
