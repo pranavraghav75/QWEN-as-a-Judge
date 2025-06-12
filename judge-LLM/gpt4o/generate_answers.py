@@ -31,6 +31,9 @@ def generate_answers(samples, output_path):
                     print(f"Skipping invalid sample: {sample}")
                     continue
             answer = get_gpt4o_answer(sample["question"])
+            if answer == "[ERROR]":
+                print(f"Failed to generate answer for question: {sample['question']}")
+                continue
             out.write(json.dumps({
                 "id": sample["id"],
                 "topic": sample["topic"],
@@ -38,3 +41,4 @@ def generate_answers(samples, output_path):
                 "gpt4o_answer": answer,
                 "solution": sample["solution"]
             }) + "\n")
+    print(f"Answers written to {output_path}")

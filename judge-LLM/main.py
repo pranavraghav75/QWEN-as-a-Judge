@@ -15,6 +15,7 @@ def load_questions(data_dir):
     for topic in topics:
         topic_dir = os.path.join(data_dir, topic)
         if not os.path.exists(topic_dir):
+            print(f"Topic directory does not exist: {topic_dir}")
             continue
         topic_samples = []
         for fname in os.listdir(topic_dir):
@@ -22,14 +23,22 @@ def load_questions(data_dir):
                 with open(os.path.join(topic_dir, fname)) as f:
                     try:
                         data = json.load(f)
-                        topic_samples.append(data)
+                        # Extract relevant fields from the JSON file
+                        topic_samples.append({
+                            "id": fname.split(".")[0],  # Use filename as ID
+                            "topic": topic,
+                            "question": data.get("problem", ""),
+                            "solution": data.get("solution", "")
+                        })
                     except json.JSONDecodeError:
                         print(f"Skipping invalid JSON file: {fname}")
                         continue
-        # Flatten the list and randomly select 25-50 questions
-        topic_samples = [item for sublist in topic_samples for item in sublist]
-        samples.extend(random.sample(topic_samples, min(len(topic_samples), random.randint(25, 50))))
+        # Select exactly 40 questions from the topic
+        if topic_samples:
+            print(f"Loaded {len(topic_samples)} questions from {topic}")
+        samples.extend(random.sample(topic_samples, min(len(topic_samples), 40)))
 
+    print(f"Total questions loaded: {len(samples)}")
     return samples
 
 def main():
