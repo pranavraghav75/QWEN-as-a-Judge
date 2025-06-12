@@ -8,8 +8,7 @@ tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
 model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto", trust_remote_code=True)
 model.eval()
 
-def judge_with_qwen(question, gpt_answer):
-    prompt = judge_prompt(question, gpt_answer)
+def judge_with_qwen(prompt):
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
     with torch.no_grad():
         output = model.generate(**inputs, max_new_tokens=256)
