@@ -50,77 +50,78 @@ def load_questions(data_dir, num_questions):
     print(f"Total questions loaded: {len(samples)}")
     return samples
 
-# def train_gpt4o(train_questions):
-#     print("Training GPT-4o with training questions...")
-#     for sample in train_questions:
-#         prompt = f"Learn the approach of problem solving using the questions and solution provided:\nQuestion: {sample['question']}\nSolution: {sample['solution']}"
-
+# def run_experiment(test_questions, mode):
+#     results = []
+#     print(f"Running experiment in mode: {mode}")
+#     for sample in tqdm(test_questions, desc=f"Judging ({mode})"):
 #         try:
-#             response = client.chat.completions.create(
-#                 model="gpt-4o",
-#                 messages=[{"role": "user", "content": prompt}],
-#                 temperature=0
-#             )
+#             if mode == "Baseline":
+#                 prompt = judge_prompt(sample["question"], solution=sample["solution"], mode=mode)
+#                 judgment = judge_with_qwen(prompt)
+#                 results.append({
+#                     "id": sample["id"],
+#                     "topic": sample["topic"],
+#                     "question": sample["question"],
+#                     "solution": sample["solution"],
+#                     "judgment": judgment,
+#                     "mode": mode
+#                 })
+#             elif mode == "B":
+#                 prompt = judge_prompt(sample["question"], gpt_answer=sample["gpt4o_answer"], solution=sample["solution"], mode=mode)
+#                 judgment = judge_with_qwen(prompt)
+#                 results.append({
+#                     "id": sample["id"],
+#                     "topic": sample["topic"],
+#                     "question": sample["question"],
+#                     "gpt4o_answer": sample["gpt4o_answer"],
+#                     "solution": sample["solution"],
+#                     "judgment": judgment,
+#                     "mode": mode
+#                 })
+#             else:
+#                 prompt = judge_prompt(sample["question"], gpt_answer=sample["gpt4o_answer"], mode=mode)
+#                 judgment = judge_with_qwen(prompt)
+#                 results.append({
+#                     "id": sample["id"],
+#                     "topic": sample["topic"],
+#                     "question": sample["question"],
+#                     "gpt4o_answer": sample["gpt4o_answer"],
+#                     "judgment": judgment,
+#                     "mode": mode
+#                 })
+
 #         except Exception as e:
-#             print(f"Error during training: {e}")
-#             continue
-#     print("Training completed.")
+#             print(f"Error during experiment in mode {mode}: {e}")
+#     print(f"Experiment completed for mode: {mode}, results count: {len(results)}")
+#     return results
 
-def run_experiment(test_questions, mode):
-    results = []
+def run_experiment(test_questions, mode, output_file):
     print(f"Running experiment in mode: {mode}")
-    for sample in tqdm(test_questions, desc=f"Judging ({mode})"):
-        try:
-            if mode == "Baseline":
-                prompt = judge_prompt(sample["question"], solution=sample["solution"], mode=mode)
-                judgment = judge_with_qwen(prompt)
-                results.append({
-                    "id": sample["id"],
-                    "topic": sample["topic"],
-                    "question": sample["question"],
-                    "solution": sample["solution"],
-                    "judgment": judgment,
-                    "mode": mode
-                })
-            elif mode == "B":
-                prompt = judge_prompt(sample["question"], gpt_answer=sample["gpt4o_answer"], solution=sample["solution"], mode=mode)
-                judgment = judge_with_qwen(prompt)
-                results.append({
-                    "id": sample["id"],
-                    "topic": sample["topic"],
-                    "question": sample["question"],
-                    "gpt4o_answer": sample["gpt4o_answer"],
-                    "solution": sample["solution"],
-                    "judgment": judgment,
-                    "mode": mode
-                })
-            else:
-                prompt = judge_prompt(sample["question"], gpt_answer=sample["gpt4o_answer"], mode=mode)
-                judgment = judge_with_qwen(prompt)
-                results.append({
-                    "id": sample["id"],
-                    "topic": sample["topic"],
-                    "question": sample["question"],
-                    "gpt4o_answer": sample["gpt4o_answer"],
-                    "judgment": judgment,
-                    "mode": mode
-                })
+    with open(output_file, "w") as f:  # Open the file for writing
+        for sample in tqdm(test_questions, desc=f"Judging ({mode})"):
+            try:
+                if mode == "Baseline":
+                    prompt = judge_prompt(sample["question"], solution=sample["solution"], mode=mode)
+                elif mode == "B":
+                    prompt = judge_prompt(sample["question"], gpt_answer=sample["gpt4o_answer"], solution=sample["solution"], mode=mode)
+                else:  # Setup A
+                    prompt = judge_prompt(sample["question"], gpt_answer=sample["gpt4o_answer"], mode=mode)
 
-            # judgment = judge_with_qwen(prompt)
-            # results.append({
-            #     "id": sample["id"],
-            #     "topic": sample["topic"],
-            #     "question": sample["question"],
-            #     "gpt4o_answer": sample["gpt4o_answer"],
-            #     "solution": sample["solution"],
-            #     "judgment": judgment,
-            #     "mode": mode
-            # })
-        except Exception as e:
-            print(f"Error during experiment in mode {mode}: {e}")
-    print(f"Experiment completed for mode: {mode}, results count: {len(results)}")
-    return results
-
+                judgment = judge_with_qwen(prompt)
+                result = {
+                    "id": sample["id"],
+                    "topic": sample["topic"],
+                    "question": sample["question"],
+                    "gpt4o_answer": sample.get("gpt4o_answer"),
+                    "solution": sample.get("solution") if mode != "A" else None,
+                    "judgment": judgment,
+                    "mode": mode
+                }
+                f.write(json.dumps(result) + "\n")  # Write each result immediately
+            except Exception as e:
+                print(f"Error during experiment in mode {mode}: {e}")
+    print(f"Experiment completed for mode: {mode}. Results written to {output_file}")
+    
 def main():
     test_questions = load_questions(TEST_DIR, num_questions=25)
 
@@ -130,7 +131,7 @@ def main():
         test_questions_with_answers = [json.loads(line) for line in f]
 
     # Main Evaluation
-    print("Running Setup A...")
+    print("##### Running Setup A #####")
     setup_a_results = run_experiment(test_questions_with_answers, mode="A")
     print(f"Setup A results count: {len(setup_a_results)}")
     with open("results/setup_a.jsonl", "w") as f:
@@ -139,7 +140,7 @@ def main():
     print("Setup A file written.")
 
     # Control
-    print("Running Setup B...")
+    print("##### Running Setup B #####")
     setup_b_results = run_experiment(test_questions_with_answers, mode="B")
     print(f"Setup B results count: {len(setup_b_results)}")
     with open("results/setup_b.jsonl", "w") as f:
@@ -148,13 +149,13 @@ def main():
     print("Setup B file written.")
 
     # Baseline
-    print("Running Baseline...")
-    baseline_results = run_experiment(test_questions_with_answers, mode="Baseline")
-    print(f"Baseline results count: {len(baseline_results)}")
-    with open("results/baseline.jsonl", "w") as f:
-        for result in baseline_results:
-            f.write(json.dumps(result) + "\n")
-    print("Baseline file written.")
+    # print("##### Running Baseline #####")
+    # baseline_results = run_experiment(test_questions_with_answers, mode="Baseline")
+    # print(f"Baseline results count: {len(baseline_results)}")
+    # with open("results/baseline.jsonl", "w") as f:
+    #     for result in baseline_results:
+    #         f.write(json.dumps(result) + "\n")
+    # print("Baseline file written.")
 
 if __name__ == "__main__":
     main()
