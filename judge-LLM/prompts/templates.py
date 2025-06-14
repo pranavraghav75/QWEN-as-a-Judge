@@ -30,7 +30,7 @@ def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
         1. Assess the reasoning and approach of GPT-4o mini's answer and decide whether the answer is **correct** or **incorrect**.
         2. Explain why in 1-2 sentences.
         3. End your response with a final line: 
-        "The answer is correct." or "The answer is partially correct." or "The answer is incorrect."
+        "The answer is correct." or "The answer is incorrect."
         """
 
     elif mode == "B":  # Control

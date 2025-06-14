@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def get_gpt4o_answer(prompt, model="gpt-4o-mini", max_tokens=512):
+def get_gpt4o_answer(prompt, model="gpt-4o-mini", max_tokens=256):
     for _ in range(3):
         try:
             response = client.chat.completions.create(model=model,
@@ -28,7 +28,7 @@ def generate_answers(samples, output_path):
                 print(f"Skipping invalid sample: {sample}")
                 continue
 
-            answer = get_gpt4o_answer(sample["question"])
+            answer = get_gpt4o_answer(sample["question"] + " Dont answer so verbosely.")
             if answer == "[ERROR]":
                 print(f"Failed to generate answer for question: {sample['question']}")
                 continue
