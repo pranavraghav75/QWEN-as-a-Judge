@@ -1,6 +1,5 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
-from prompts.templates import judge_prompt
 
 model_name = "Qwen/Qwen3-1.7B"
 

@@ -93,9 +93,9 @@ def run_experiment(test_questions, mode):
     return results
 
 def main():
-    test_questions = load_questions(TEST_DIR, num_questions=25)
+    # test_questions = load_questions(TEST_DIR, num_questions=25)
 
-    generate_answers(test_questions, GPT_OUTPUT)
+    # generate_answers(test_questions, GPT_OUTPUT)
 
     with open(GPT_OUTPUT, "r") as f:
         test_questions_with_answers = [json.loads(line) for line in f]
