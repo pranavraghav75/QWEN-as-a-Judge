@@ -1,7 +1,7 @@
 def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
     if mode == "A":  # Main Evaluation
         return f"""
-        You are tasked with evaluating the correctness and quality of an answer provided by GPT-4o mini to a mathematical question.
+        You are evaluating the correctness of a math answer by GPT-4o mini.
 
         Question:
         {question}
@@ -9,21 +9,14 @@ def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
         GPT-4o mini's Answer:
         {gpt_answer}
 
-        Your task:
-        1. Assess the reasoning and approach of GPT-4o mini's answer and decide whether the answer is correct or incorrect.
-        2. Explain why concisely.
-
         Respond in this exact JSON format:
-        {{
-        "verdict": "correct" | "incorrect",
-        "justification": "short explanation"
-        }}
+        {{"verdict": "correct" or "incorrect", "justification": "<short one-sentence explanation>"}}
+        Only return valid JSON and nothing else.
         """
-
 
     elif mode == "B":  # Control
         return f"""
-        You are tasked with evaluating the correctness and quality of an answer provided by GPT-4o mini to a mathematical question.
+        You are evaluating the correctness of a math answer by GPT-4o mini by comparing with the solution.
 
         Question: {question}
 
@@ -31,15 +24,9 @@ def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
 
         Solution: {solution}
 
-        Your task:
-        1. Assess and compare the reasoning and approach of GPT-4o mini's answer with the solution provided and decide whether the answer is correct or incorrect.
-        2. Explain why concisely.
-
         Respond in this exact JSON format:
-        {{
-        "verdict": "correct" | "incorrect",
-        "justification": "short explanation"
-        }}
+        {{"verdict": "correct" or "incorrect", "justification": "<short one-sentence explanation>"}}
+        Only return valid JSON and nothing else.
         """
 
     # elif mode == "Baseline":  # Baseline
