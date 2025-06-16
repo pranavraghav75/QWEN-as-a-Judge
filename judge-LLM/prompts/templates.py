@@ -1,32 +1,35 @@
 def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
-    if mode == "A":  # Main Evaluation
+    if mode == "A": # Main Evaluation
         return f"""
-        You are evaluating the correctness of a math answer by GPT-4o mini.
+        You are a math evaluator. Given a question and a student's answer, decide if the answer is mathematically correct.
 
         Question:
         {question}
 
-        GPT-4o mini's Answer:
+        Student Answer:
         {gpt_answer}
 
         Respond in this exact JSON format:
-        {{"verdict": "correct" or "incorrect", "justification": "<short one-sentence explanation>"}}
-        Only return valid JSON and nothing else.
+        {{"verdict": "correct" or "incorrect", "justification": "<one-sentence explanation>"}}
+        Only return valid JSON. Do not include any extra text or commentary.
         """
 
     elif mode == "B":  # Control
         return f"""
-        You are evaluating the correctness of a math answer by GPT-4o mini by comparing with the solution.
+        You are a math evaluator. Given a question, a student's answer, and the correct solution, determine if the student's answer is correct by comparing it to the solution.
 
-        Question: {question}
+        Question:
+        {question}
 
-        GPT-4o mini Answer: {gpt_answer}
+        Student Answer:
+        {gpt_answer}
 
-        Solution: {solution}
+        Correct Solution:
+        {solution}
 
         Respond in this exact JSON format:
-        {{"verdict": "correct" or "incorrect", "justification": "<short one-sentence explanation>"}}
-        Only return valid JSON and nothing else.
+        {{"verdict": "correct" or "incorrect", "justification": "<one-sentence explanation>"}}
+        Only return valid JSON. Do not include any extra text or commentary.
         """
 
     # elif mode == "Baseline":  # Baseline

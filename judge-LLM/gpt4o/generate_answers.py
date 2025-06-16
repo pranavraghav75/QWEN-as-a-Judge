@@ -28,7 +28,9 @@ def generate_answers(samples, output_path):
                 print(f"Skipping invalid sample: {sample}")
                 continue
 
-            answer = get_gpt4o_answer(sample["question"] + " Dont answer so verbosely.")
+            answer = get_gpt4o_answer(
+                sample["question"] + " Give only the final answer. Do not explain your reasoning."
+            )
             if answer == "[ERROR]":
                 print(f"Failed to generate answer for question: {sample['question']}")
                 continue
