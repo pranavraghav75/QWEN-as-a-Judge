@@ -10,10 +10,10 @@ def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
         {gpt_answer}
 
         Respond in this JSON format with two keys:
-        - "verdict": either "correct" or "incorrect"
+        - "verdict": pick only one from "correct" or "incorrect"
         - "justification": one-sentence explanation based on math logic
 
-        Only return a single valid JSON object. Do not include any extra text or commentary.
+        Only return one single valid JSON response. Do not include any extra text or commentary.
         """
 
     elif mode == "B":  # Control
@@ -30,10 +30,10 @@ def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
         {solution}
 
         Respond in this JSON format with two keys:
-        - "verdict": either "correct" or "incorrect"
+        - "verdict": pick only one from "correct" or "incorrect"
         - "justification": one-sentence explanation based on math logic
 
-        Only return a single valid JSON object. Do not include any extra text or commentary.
+        Only return one single valid JSON response. Do not include any extra text or commentary.
         """
 
     # elif mode == "Baseline":  # Baseline
