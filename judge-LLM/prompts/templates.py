@@ -13,7 +13,10 @@ def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
         - "analysis": one-sentence explanation based on math logic
         - "verdict": pick only one from "correct" or "incorrect"
 
-        Only return one single valid JSON response. Do not include any extra text or commentary.
+        Guildelines:
+        - Be objective and strict in your evaluation.
+        - Only mark "correct" if the answer is fully mathematically valid.
+        - Do not explain your reasoning outside the JSON. Do not include any extra text or commentary.
         """
 
     elif mode == "B":  # Control
@@ -33,7 +36,10 @@ def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
         - "analysis": one-sentence explanation based on math logic
         - "verdict": pick only one from "correct" or "incorrect"
 
-        Only return one single valid JSON response. Do not include any extra text or commentary.
+        Guildelines:
+        - Be objective and strict in your evaluation.
+        - Only mark "correct" if the answer is fully mathematically valid.
+        - Do not explain your reasoning outside the JSON. Do not include any extra text or commentary.
         """
 
     # elif mode == "Baseline":  # Baseline
