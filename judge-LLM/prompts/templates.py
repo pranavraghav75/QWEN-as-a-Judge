@@ -10,8 +10,8 @@ def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
         {gpt_answer}
 
         Respond in this JSON format with two keys:
+        - "analysis": one-sentence explanation based on math logic
         - "verdict": pick only one from "correct" or "incorrect"
-        - "justification": one-sentence explanation based on math logic
 
         Only return one single valid JSON response. Do not include any extra text or commentary.
         """
@@ -30,8 +30,8 @@ def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
         {solution}
 
         Respond in this JSON format with two keys:
+        - "analysis": one-sentence explanation based on math logic
         - "verdict": pick only one from "correct" or "incorrect"
-        - "justification": one-sentence explanation based on math logic
 
         Only return one single valid JSON response. Do not include any extra text or commentary.
         """
