@@ -38,6 +38,7 @@ def generate_answers(samples, output_path):
             out.write(json.dumps({
                 "id": sample["id"],
                 "topic": sample["topic"],
+                "difficulty": sample.get("difficulty", ""),
                 "question": sample["question"],
                 "gpt4o_answer": answer,
                 "solution": sample["solution"]

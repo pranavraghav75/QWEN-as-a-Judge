@@ -1,4 +1,4 @@
-def judge_prompt(question, mode, gpt_answer=None):
+def judge_prompt(question, mode, gpt_answer):
     topic = {
         "algebra": "algebra",
         "number_theory": "number theory",

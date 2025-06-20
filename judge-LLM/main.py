@@ -61,6 +61,7 @@ def run_experiment(test_questions):
                     "topic": sample["topic"],
                     "difficulty": sample["difficulty"],
                     "question": sample["question"],
+                    "gpt4o_answer": sample["gpt4o_answer"],
                     "solution": sample["solution"],
                     "judgment": judgment,
                     "mode": "algebra"
@@ -73,6 +74,7 @@ def run_experiment(test_questions):
                     "topic": sample["topic"],
                     "difficulty": sample["difficulty"],
                     "question": sample["question"],
+                    "gpt4o_answer": sample["gpt4o_answer"],
                     "solution": sample["solution"],
                     "judgment": judgment,
                     "mode": "number_theory"
@@ -85,6 +87,7 @@ def run_experiment(test_questions):
                     "topic": sample["topic"],
                     "difficulty": sample["difficulty"],
                     "question": sample["question"],
+                    "gpt4o_answer": sample["gpt4o_answer"],
                     "solution": sample["solution"],
                     "judgment": judgment,
                     "mode": "counting_and_probability"
