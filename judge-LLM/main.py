@@ -49,11 +49,11 @@ def load_questions(data_dir, num_questions):
 
 def run_experiment(test_questions, mode):
     results = []
-    print(f"Running experiment in mode: {mode}")
-    for sample in tqdm(test_questions, desc=f"Judging ({mode})"):
+    for sample in tqdm(test_questions, desc=f"Judging Questions)"):
         try:
-            if mode == "Baseline":
-                prompt = judge_prompt(sample["question"], solution=sample["solution"], mode=mode)
+            print(f"Processing question type {sample['topic']}")
+            if sample["topic"] == "algebra":
+                prompt = judge_prompt(sample["question"], solution=sample["solution"], mode="algebra")
                 judgment = judge_with_qwen(prompt)
                 results.append({
                     "id": sample["id"],
@@ -63,29 +63,62 @@ def run_experiment(test_questions, mode):
                     "judgment": judgment,
                     "mode": mode
                 })
-            elif mode == "B":
-                prompt = judge_prompt(sample["question"], gpt_answer=sample["gpt4o_answer"], solution=sample["solution"], mode=mode)
+            elif sample["topic"] == "number_theory":
+                prompt = judge_prompt(sample["question"], solution=sample["solution"], mode="number_theory")
                 judgment = judge_with_qwen(prompt)
                 results.append({
                     "id": sample["id"],
                     "topic": sample["topic"],
                     "question": sample["question"],
-                    "gpt4o_answer": sample["gpt4o_answer"],
                     "solution": sample["solution"],
                     "judgment": judgment,
                     "mode": mode
                 })
             else:
-                prompt = judge_prompt(sample["question"], gpt_answer=sample["gpt4o_answer"], mode=mode)
+                prompt = judge_prompt(sample["question"], solution=sample["solution"], mode="counting_and_probability")
                 judgment = judge_with_qwen(prompt)
                 results.append({
                     "id": sample["id"],
                     "topic": sample["topic"],
                     "question": sample["question"],
-                    "gpt4o_answer": sample["gpt4o_answer"],
+                    "solution": sample["solution"],
                     "judgment": judgment,
                     "mode": mode
                 })
+            # if mode == "Baseline":
+            #     prompt = judge_prompt(sample["question"], solution=sample["solution"], mode=mode)
+            #     judgment = judge_with_qwen(prompt)
+            #     results.append({
+            #         "id": sample["id"],
+            #         "topic": sample["topic"],
+            #         "question": sample["question"],
+            #         "solution": sample["solution"],
+            #         "judgment": judgment,
+            #         "mode": mode
+            #     })
+            # elif mode == "B":
+            #     prompt = judge_prompt(sample["question"], gpt_answer=sample["gpt4o_answer"], solution=sample["solution"], mode=mode)
+            #     judgment = judge_with_qwen(prompt)
+            #     results.append({
+            #         "id": sample["id"],
+            #         "topic": sample["topic"],
+            #         "question": sample["question"],
+            #         "gpt4o_answer": sample["gpt4o_answer"],
+            #         "solution": sample["solution"],
+            #         "judgment": judgment,
+            #         "mode": mode
+            #     })
+            # else:
+            #     prompt = judge_prompt(sample["question"], gpt_answer=sample["gpt4o_answer"], mode=mode)
+            #     judgment = judge_with_qwen(prompt)
+            #     results.append({
+            #         "id": sample["id"],
+            #         "topic": sample["topic"],
+            #         "question": sample["question"],
+            #         "gpt4o_answer": sample["gpt4o_answer"],
+            #         "judgment": judgment,
+            #         "mode": mode
+            #     })
 
         except Exception as e:
             print(f"Error during experiment in mode {mode}: {e}")
@@ -93,15 +126,14 @@ def run_experiment(test_questions, mode):
     return results
 
 def main():
-    test_questions = load_questions(TEST_DIR, num_questions=25)
+    # test_questions = load_questions(TEST_DIR, num_questions=25)
 
-    generate_answers(test_questions, GPT_OUTPUT)
+    # generate_answers(test_questions, GPT_OUTPUT)
 
     with open(GPT_OUTPUT, "r") as f:
         test_questions_with_answers = [json.loads(line) for line in f]
 
-    # Main Evaluation
-    print("##### Running Setup A #####")
+    # print("##### Running Setup A #####")
     setup_a_results = run_experiment(test_questions_with_answers, mode="A")
     print(f"Setup A results count: {len(setup_a_results)}")
     with open("results/setup_a.jsonl", "w") as f:
@@ -109,16 +141,15 @@ def main():
             f.write(json.dumps(result) + "\n")
     print("Setup A file written.")
 
-    # Control
-    print("##### Running Setup B #####")
-    setup_b_results = run_experiment(test_questions_with_answers, mode="B")
-    print(f"Setup B results count: {len(setup_b_results)}")
-    with open("results/setup_b.jsonl", "w") as f:
-        for result in setup_b_results:
-            f.write(json.dumps(result) + "\n")
-    print("Setup B file written.")
+    # With Solution
+    # print("##### Running Setup B #####")
+    # setup_b_results = run_experiment(test_questions_with_answers, mode="B")
+    # print(f"Setup B results count: {len(setup_b_results)}")
+    # with open("results/setup_b.jsonl", "w") as f:
+    #     for result in setup_b_results:
+    #         f.write(json.dumps(result) + "\n")
+    # print("Setup B file written.")
 
-    # Baseline
     # print("##### Running Baseline #####")
     # baseline_results = run_experiment(test_questions_with_answers, mode="Baseline")
     # print(f"Baseline results count: {len(baseline_results)}")
