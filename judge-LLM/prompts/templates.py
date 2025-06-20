@@ -7,24 +7,18 @@ def judge_prompt(question, mode, gpt_answer):
 
     return f"""You are a mathematical judge. You specialize in solving {topic} problems. Your task is to determine whether a student's answer to a math question is mathematically correct.
 
-    Requirements:
-    - Be objective and strict in your evaluation.
-    - Only mark "correct" if the answer is fully mathematically valid.
-    - Do not include any extra text or commentary, only return the JSON object.
+    Please respond in the following strict JSON format:
+    "analysis": one-sentence explanation that clearly justifies your verdict using math logic
+    "verdict": correct or incorrect
+
+    Do not include any extra text or commentary, only return the JSON object.
 
     Question:
     {question}
 
     Student Answer:
     {gpt_answer}
-
-    Please respond in the following strict JSON format:
-    {{
-    "analysis": "one-sentence explanation that clearly justifies your verdict using math logic",
-    "verdict": "correct" or "incorrect"
-    }}
     """
-
 
 
 
