@@ -34,6 +34,7 @@ def load_questions(data_dir, num_questions):
                         topic_samples.append({
                             "id": fname.split(".")[0],
                             "topic": topic,
+                            "difficulty": data.get("level", ""),
                             "question": data.get("problem", ""),
                             "solution": data.get("solution", "")
                         })
@@ -47,43 +48,46 @@ def load_questions(data_dir, num_questions):
     print(f"Total questions loaded: {len(samples)}")
     return samples
 
-def run_experiment(test_questions, mode):
+def run_experiment(test_questions):
     results = []
     for sample in tqdm(test_questions, desc=f"Judging Questions)"):
         try:
             print(f"Processing question type {sample['topic']}")
             if sample["topic"] == "algebra":
-                prompt = judge_prompt(sample["question"], solution=sample["solution"], mode="algebra")
+                prompt = judge_prompt(sample["question"], mode="algebra", gpt_answer=sample["gpt4o_answer"])
                 judgment = judge_with_qwen(prompt)
                 results.append({
                     "id": sample["id"],
                     "topic": sample["topic"],
+                    "difficulty": sample["difficulty"],
                     "question": sample["question"],
                     "solution": sample["solution"],
                     "judgment": judgment,
-                    "mode": mode
+                    "mode": "algebra"
                 })
             elif sample["topic"] == "number_theory":
-                prompt = judge_prompt(sample["question"], solution=sample["solution"], mode="number_theory")
+                prompt = judge_prompt(sample["question"], mode="number_theory", gpt_answer=sample["gpt4o_answer"])
                 judgment = judge_with_qwen(prompt)
                 results.append({
                     "id": sample["id"],
                     "topic": sample["topic"],
+                    "difficulty": sample["difficulty"],
                     "question": sample["question"],
                     "solution": sample["solution"],
                     "judgment": judgment,
-                    "mode": mode
+                    "mode": "number_theory"
                 })
             else:
-                prompt = judge_prompt(sample["question"], solution=sample["solution"], mode="counting_and_probability")
+                prompt = judge_prompt(sample["question"], mode="counting_and_probability", gpt_answer=sample["gpt4o_answer"])
                 judgment = judge_with_qwen(prompt)
                 results.append({
                     "id": sample["id"],
                     "topic": sample["topic"],
+                    "difficulty": sample["difficulty"],
                     "question": sample["question"],
                     "solution": sample["solution"],
                     "judgment": judgment,
-                    "mode": mode
+                    "mode": "counting_and_probability"
                 })
             # if mode == "Baseline":
             #     prompt = judge_prompt(sample["question"], solution=sample["solution"], mode=mode)
@@ -121,20 +125,20 @@ def run_experiment(test_questions, mode):
             #     })
 
         except Exception as e:
-            print(f"Error during experiment in mode {mode}: {e}")
-    print(f"Experiment completed for mode: {mode}, results count: {len(results)}")
+            print(f"Error during experiment: {e}")
+    print(f"Experiment completed, results count: {len(results)}")
     return results
 
 def main():
-    # test_questions = load_questions(TEST_DIR, num_questions=25)
+    test_questions = load_questions(TEST_DIR, num_questions=25)
 
-    # generate_answers(test_questions, GPT_OUTPUT)
+    generate_answers(test_questions, GPT_OUTPUT)
 
     with open(GPT_OUTPUT, "r") as f:
         test_questions_with_answers = [json.loads(line) for line in f]
 
     # print("##### Running Setup A #####")
-    setup_a_results = run_experiment(test_questions_with_answers, mode="A")
+    setup_a_results = run_experiment(test_questions_with_answers)
     print(f"Setup A results count: {len(setup_a_results)}")
     with open("results/setup_a.jsonl", "w") as f:
         for result in setup_a_results:
