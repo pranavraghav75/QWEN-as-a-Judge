@@ -7,20 +7,21 @@ def judge_prompt(question, mode, gpt_answer):
 
     return f"""You are a mathematical judge. You specialize in solving {topic} problems. Your task is to determine whether a student's answer to a math question is mathematically correct.
 
-    Please respond in the following strict JSON format:
-    "analysis": one-sentence explanation that clearly justifies your verdict using math logic
-    "verdict": correct or incorrect
-
-    Do not include any extra text or commentary, only return the JSON object.
-
     Question:
     {question}
 
     Student Answer:
     {gpt_answer}
+
+    Do not include any extra text or commentary. Only return your answer in this JSON format:
+    {{
+    "analysis": one-sentence explanation that clearly justifies your verdict using math logic
+    "verdict": correct or incorrect
+    }}
     """
 
-
+# added in the json brakcets, also moved the rquirement to after the question and answer
+# also removed the requirements part and just made it short and simple, no extra words and only return in json format
 
 # def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
 #     # if mode == "A": # Main Evaluation
