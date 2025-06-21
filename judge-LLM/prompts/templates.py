@@ -5,26 +5,25 @@ def judge_prompt(question, mode, gpt_answer):
         "counting_and_probability": "counting and probability"
     }.get(mode, "mathematics")
 
-    return f"""You are a mathematical judge. You specialize in solving {topic} problems. Your task is to determine whether a student's answer to a math question is mathematically correct.
-
-    Your will be provided with the original question and the student's answer.
+    return f"""You specialize in solving {topic} problems. Your task is to determine whether this answer is mathematically correct.
 
     Question:
     {question}
 
-    Student Answer:
+    Answer:
     {gpt_answer}
 
-    Please think step by step before returning your answer in the following JSON format:
+    Please provide your final evaluation in the following JSON format:
     {{
-    "Verdict": correct or incorrect
-    "Analysis": one-sentence explanation that clearly justifies your verdict using math logic
+    "Verdict": "correct" or "incorrect",
+    "Analysis": "one-sentence explanation that clearly justifies your verdict using math logic"
     }}
+    Only return a single valid JSON object and nothing else.
     """
 
-# reduced temrperate from 0.4 to 0.3 and tokens to 512, also asked to think step by step before answering (no restrictions)
+# rremoved the "youre a judge" role and replaced student answer with more generic "answer"
 
-# next, get the prompts given by chatgpt and compare each
+# for judging, look at answers starting from and including the changes made to temp 0.4 to 0.3 ...
 
 
 # def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
