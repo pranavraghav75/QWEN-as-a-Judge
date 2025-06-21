@@ -7,20 +7,25 @@ def judge_prompt(question, mode, gpt_answer):
 
     return f"""You are a mathematical judge. You specialize in solving {topic} problems. Your task is to determine whether a student's answer to a math question is mathematically correct.
 
+    Your will be provided with the original question and the student's answer.
+
     Question:
     {question}
 
     Student Answer:
     {gpt_answer}
 
-    Please think about your verdict and justification before answering. Only return your answer in the following JSON format:
+    Please think step by step before returning your answer in the following JSON format:
     {{
-    "verdict": correct or incorrect
-    "analysis": one-sentence explanation that clearly justifies your verdict using math logic
+    "Verdict": correct or incorrect
+    "Analysis": one-sentence explanation that clearly justifies your verdict using math logic
     }}
     """
 
-# switched verdict to come before analysis in json format, also asked it to think before answering
+# reduced temrperate from 0.4 to 0.3 and tokens to 512, also asked to think step by step before answering (no restrictions)
+
+# next, get the prompts given by chatgpt and compare each
+
 
 # def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
 #     # if mode == "A": # Main Evaluation

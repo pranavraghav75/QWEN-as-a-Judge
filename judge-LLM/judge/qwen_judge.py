@@ -12,9 +12,9 @@ def judge_with_qwen(prompt):
     with torch.no_grad():
         output = model.generate(
             **inputs,
-            max_new_tokens=256,
+            max_new_tokens=512,
             do_sample=True,
-            temperature=0.4,
+            temperature=0.3,
             top_p=0.9,
             top_k=50
         )
