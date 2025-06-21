@@ -13,7 +13,10 @@ def judge_with_qwen(prompt):
         output = model.generate(
             **inputs,
             max_new_tokens=256,
-            do_sample=False
+            do_sample=True,
+            temperature=0.4,
+            top_p=0.9,
+            top_k=50
         )
     decoded = tokenizer.decode(output[0], skip_special_tokens=True)
 

@@ -52,7 +52,6 @@ def run_experiment(test_questions):
     results = []
     for sample in tqdm(test_questions, desc=f"Judging Questions)"):
         try:
-            print(f"Processing question type {sample['topic']}")
             if sample["topic"] == "algebra":
                 prompt = judge_prompt(sample["question"], mode="algebra", gpt_answer=sample["gpt4o_answer"])
                 judgment = judge_with_qwen(prompt)
