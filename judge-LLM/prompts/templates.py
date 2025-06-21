@@ -13,15 +13,14 @@ def judge_prompt(question, mode, gpt_answer):
     Student Answer:
     {gpt_answer}
 
-    Do not include any extra text or commentary. Only return your answer in this JSON format:
+    Please think about your verdict and justification before answering. Only return your answer in the following JSON format:
     {{
-    "analysis": one-sentence explanation that clearly justifies your verdict using math logic
     "verdict": correct or incorrect
+    "analysis": one-sentence explanation that clearly justifies your verdict using math logic
     }}
     """
 
-# added in the json brakcets, also moved the rquirement to after the question and answer
-# also removed the requirements part and just made it short and simple, no extra words and only return in json format
+# switched verdict to come before analysis in json format, also asked it to think before answering
 
 # def judge_prompt(question, gpt_answer=None, solution=None, mode="A"):
 #     # if mode == "A": # Main Evaluation
