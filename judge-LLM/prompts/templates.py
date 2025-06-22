@@ -5,7 +5,7 @@ def judge_prompt(question, mode, gpt_answer):
         "counting_and_probability": "counting and probability"
     }.get(mode, "mathematics")
 
-    return f"""You are a mathematical judge. You specialize in solving {topic} problems. Your task is to determine whether the student's answer is mathematically correct and well written.
+    return f"""You are a mathematical judge. You specialize in solving {topic} problems. Your task is to determine whether the student's answer is mathematically correct. Think step by step, and provide a reasoning for your judgment.
 
     Question:
     {question}
@@ -13,15 +13,14 @@ def judge_prompt(question, mode, gpt_answer):
     Student Answer:
     {gpt_answer}
 
-    Please reason step by step before returning your answer in the following JSON format:
+    You must give me an answer, and it must be in the following JSON format:
     {{
     "Verdict": "correct" or "incorrect",
     "Analysis": "one-sentence explanation that clearly justifies your verdict using math logic"
     }}
-    Only return a single valid JSON object and nothing else.
     """
 
-# Fluency bias test (adds "well-written" hint)
+# " Think step by step, and provide a reasoning for your judgment." Big thing was the "must answer"
 
 # for judging, look at answers starting from and including the changes made to temp 0.4 to 0.3 ...
 
