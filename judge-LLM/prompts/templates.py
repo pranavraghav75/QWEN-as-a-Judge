@@ -5,22 +5,23 @@ def judge_prompt(question, mode, gpt_answer):
         "counting_and_probability": "counting and probability"
     }.get(mode, "mathematics")
 
-    return f"""You are a mathematical judge. You specialize in solving {topic} problems. You must reason step by step to verify the correctness of the student's answer.
+    return f"""You are a mathematical judge. You specialize in solving {topic} problems. Your task is to determine whether the student's answer is mathematically correct.
+
+    Restrictions:
+    You must give me an answer, and it must be in the following JSON format:
+    {{
+    "verdict": pick either correct or incorrect,
+    "analysis": one-sentence explanation that clearly justifies your verdict using math logic
+    }}
 
     Question:
     {question}
 
     Student Answer:
     {gpt_answer}
-
-    You must think carefully through the problem. Then, you must give me an answer and it must be in the following JSON format:
-    {{
-    "verdict": pick either correct or incorrect,
-    "analysis": one-sentence explanation that clearly justifies your verdict using math logic
-    }}
     """
 
-# still using strongwordslike must, and this time we are asking for more  CoT to see if it improves accuracy
+# put the word restrictions and put questions and student answer at the end of prompt
 
 # for judging, look at answers starting from and including the changes made to temp 0.4 to 0.3 ...
 
