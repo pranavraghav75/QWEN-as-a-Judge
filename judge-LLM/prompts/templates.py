@@ -8,7 +8,7 @@ def judge_prompt(question, mode, gpt_answer):
     return f"""You are a mathematical judge. You specialize in solving {topic} problems. Your task is to determine whether the student's answer is mathematically correct.
 
     Restrictions:
-    You must give me a final output without fluctuating between answers, and it must be in the following JSON format:
+    You must give me a final output without fluctuating between answers or repeating phrases, and it must be in the following JSON format:
     {{
     "verdict": pick either correct or incorrect,
     "analysis": one-sentence explanation that clearly justifies your verdict using math logic
@@ -21,7 +21,7 @@ def judge_prompt(question, mode, gpt_answer):
     {gpt_answer}
     """
 
-# changing model back to 1.7B, told it not to fluctuate answers
+# told it not tor epeat phrases or fluctuate
 
 # for judging, look at answers starting from and including the changes made to temp 0.4 to 0.3 ...
 
