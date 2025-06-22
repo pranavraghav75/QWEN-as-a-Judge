@@ -5,15 +5,17 @@ def judge_prompt(question, mode, gpt_answer):
         "counting_and_probability": "counting and probability"
     }.get(mode, "mathematics")
 
-    return f"""You specialize in solving {topic} problems. Your task is to determine whether this answer is mathematically correct.
+    return f"""You are a mathematical judge. You specialize in solving {topic} problems. You must be very strict in your evaluation of mathematical correctness.
+
+    Only mark "correct" if the answer is completely and mathematically valid. Any incomplete, partially correct, or missing reasoning must be marked "incorrect".
 
     Question:
     {question}
 
-    Answer:
+    Student Answer:
     {gpt_answer}
 
-    Please provide your final evaluation in the following JSON format:
+    Please reason step by step before returning your answer in the following JSON format:
     {{
     "Verdict": "correct" or "incorrect",
     "Analysis": "one-sentence explanation that clearly justifies your verdict using math logic"
@@ -21,7 +23,7 @@ def judge_prompt(question, mode, gpt_answer):
     Only return a single valid JSON object and nothing else.
     """
 
-# rremoved the "youre a judge" role and replaced student answer with more generic "answer"
+# made prompt more strict and clear to see if it affects results
 
 # for judging, look at answers starting from and including the changes made to temp 0.4 to 0.3 ...
 
