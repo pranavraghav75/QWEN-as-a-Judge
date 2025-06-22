@@ -13,6 +13,8 @@ def judge_prompt(question, mode, gpt_answer):
     Student Answer:
     {gpt_answer}
 
+    You must not fall into a loop of repeating your words or phrases, once you have given your answer, move on.
+
     You must give me an answer, and it must be in the following JSON format:
     {{
     "Verdict": "correct" or "incorrect",
@@ -20,7 +22,7 @@ def judge_prompt(question, mode, gpt_answer):
     }}
     """
 
-# " Think step by step, and provide a reasoning for your judgment." Big thing was the "must answer"
+# explicitely telling it to not repeat words
 
 # for judging, look at answers starting from and including the changes made to temp 0.4 to 0.3 ...
 
