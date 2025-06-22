@@ -21,7 +21,7 @@ def judge_prompt(question, mode, gpt_answer):
     {gpt_answer}
     """
 
-# same as last time but set tokens to 256
+# changing model to 0.6B
 
 # for judging, look at answers starting from and including the changes made to temp 0.4 to 0.3 ...
 
