@@ -10,7 +10,7 @@ def judge_prompt(question, mode, gpt_answer):
     Restrictions:
     You must give me a final output without fluctuating between answers, and it must be in the following JSON format:
     {{
-    "verdict": pick either correct or incorrect,
+    "correct": true if the answer is correct, false if it is incorrect
     "analysis": one-sentence explanation that clearly justifies your verdict using math logic
     }}
 
