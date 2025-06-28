@@ -5,23 +5,23 @@ def judge_prompt(question, mode, gpt_answer):
         "counting_and_probability": "counting and probability"
     }.get(mode, "mathematics")
 
-    return f"""You are a mathematical judge. You specialize in solving {topic} problems. Your task is to determine whether the student's answer is mathematically correct.
+    return f"""You are a mathematical evaluator. You are NOT to assume the student's answer is correct. Instead, verify the answer independently based on your own math reasoning.
 
-    Restrictions:
-    You must give me a final output without fluctuating between answers, and it must be in the following JSON format:
-    {{
-    "correct": true if the answer is correct, false if it is incorrect
-    "analysis": one-sentence explanation that clearly justifies your verdict using math logic
-    }}
+    Instructions:
+    1) Think through the problem on your own first.
+    2) Then compare the student's answer to your own.
+    3) Base your verdict on mathematical accuracy only.
+    4) Do not contradict yourself.
+    5) Your response must state a "verdict" field as correct or incorrect, followed by a justification if the answer is incorrect.
 
-    Question:
+    Problem:
     {question}
 
-    Student Answer:
+    Student's Proposed Answer:
     {gpt_answer}
     """
 
-# siwtched to 0.6, using the 'dont fluctuate' prompt without the 'dont repeat answers' part
+# added all these new instructions to combat conformity bias so QWEN thinks on its own, also changing GPT prompt to answer the questions better
 
 # for judging, look at answers starting from and including the changes made to temp 0.4 to 0.3 ...
 

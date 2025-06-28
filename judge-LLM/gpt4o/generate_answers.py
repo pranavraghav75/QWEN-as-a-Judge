@@ -29,7 +29,11 @@ def generate_answers(samples, output_path):
                 continue
 
             answer = get_gpt4o_answer(
-                sample["question"] + " Give only the final answer. Do not explain your reasoning."
+                f"""Answer the following math question, you must give a final answer with justification.
+
+                Question:
+                {sample["question"]}
+                """
             )
             if answer == "[ERROR]":
                 print(f"Failed to generate answer for question: {sample['question']}")
