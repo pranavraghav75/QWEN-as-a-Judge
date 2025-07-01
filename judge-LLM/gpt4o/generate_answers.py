@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def get_gpt4o_answer(prompt, model="gpt-4o-mini", max_tokens=256):
+def get_gpt4o_answer(prompt, model="gpt-4o-mini", max_tokens=512):
     for _ in range(3):
         try:
             response = client.chat.completions.create(model=model,

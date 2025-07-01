@@ -8,16 +8,14 @@ def judge_prompt(question, mode, gpt_answer):
     return f"""You are a mathematical evaluator. You are NOT to assume the student's answer is correct. Instead, verify the answer independently based on your own math reasoning.
 
     Instructions:
-    1) Think through the problem on your own first.
-    2) Then compare the student's answer to your own.
-    3) Base your verdict on mathematical accuracy only.
-    4) Do not contradict yourself.
-    5) Your response must state a "verdict" field as correct or incorrect, followed by a justification if the answer is incorrect.
+    1) Think through the problem on your own first, concisely explaining your reasoning and solution.
+    2) Compare the student's answer to your own.
+    3) Your response must state a "verdict" field as correct or incorrect, followed by a justification if the answer is incorrect.
 
     Problem:
     {question}
 
-    Student's Proposed Answer:
+    Student's Answer:
     {gpt_answer}
     """
 
