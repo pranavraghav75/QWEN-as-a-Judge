@@ -19,6 +19,31 @@ def judge_prompt(question, mode, gpt_answer):
     {gpt_answer}
     """
 
+def judge_prompt_nonthinking(question, mode, gpt_answer):
+    topic = {
+        "algebra": "algebra",
+        "number_theory": "number theory",
+        "counting_and_probability": "counting and probability"
+    }.get(mode, "mathematics")
+
+    return f"""You are a mathematical evaluator specailzing in  {topic}. You are NOT to assume the student's answer is correct. Instead, verify the answer independently based on your own math reasoning.
+
+    Instructions:
+    1) Respond with one of: correct, incorrect, or incomplete.
+    2) If the answer is incorrect or incomplete, add a very brief justification.
+
+
+    Problem:
+    {question}
+
+    Student's Answer:
+    {gpt_answer}
+    /no_think
+    """
+
+
+
+
 # added the incopmlete state to verdict and changd answer generation script slightly
 
 # for judging, look at answers starting from and including the changes made to temp 0.4 to 0.3 ...

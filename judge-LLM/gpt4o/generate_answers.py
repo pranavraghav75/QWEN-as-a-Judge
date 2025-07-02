@@ -29,7 +29,7 @@ def generate_answers(samples, output_path):
                 continue
 
             answer = get_gpt4o_answer(
-                f"""Answer the following math question, you must give a final answer with a concise and comprehensive justification.
+                f"""Answer the following math question, you must give a final answer with a concise but valid justification.
 
                 Question:
                 {sample["question"]}
