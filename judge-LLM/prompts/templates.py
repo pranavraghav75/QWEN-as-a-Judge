@@ -5,12 +5,12 @@ def judge_prompt(question, mode, gpt_answer):
         "counting_and_probability": "counting and probability"
     }.get(mode, "mathematics")
 
-    return f"""You are a mathematical evaluator. You are NOT to assume the student's answer is correct. Instead, verify the answer independently based on your own math reasoning.
+    return f"""You are a mathematical evaluator specailzing in  {topic}. You are NOT to assume the student's answer is correct. Instead, verify the answer independently based on your own math reasoning.
 
     Instructions:
     1) Think through the problem on your own first, concisely explaining your reasoning and solution.
     2) Compare the student's answer to your own.
-    3) Your response must state a "verdict" field as correct or incorrect, followed by a justification if the answer is incorrect.
+    3) Your response must state a "verdict" field as one of {"correct", "incorrect", "incomplete"}, followed by a justification if the answer is incorrect or incomplete.
 
     Problem:
     {question}
@@ -19,7 +19,7 @@ def judge_prompt(question, mode, gpt_answer):
     {gpt_answer}
     """
 
-# added all these new instructions to combat conformity bias so QWEN thinks on its own, also changing GPT prompt to answer the questions better
+# added the incopmlete state to verdict and changd answer generation script slightly
 
 # for judging, look at answers starting from and including the changes made to temp 0.4 to 0.3 ...
 
