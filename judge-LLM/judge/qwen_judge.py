@@ -27,7 +27,7 @@ def judge_with_nonthinking_qwen(prompt):
     with torch.no_grad():
         output = model.generate(
             **inputs,
-            max_new_tokens=512,
+            max_new_tokens=64,
         )
     decoded = tokenizer.decode(output[0], skip_special_tokens=True)
 
@@ -49,7 +49,7 @@ def small_judge_with_nonthinking_qwen(prompt):
     with torch.no_grad():
         output = small_model.generate(
             **inputs,
-            max_new_tokens=512
+            max_new_tokens=64,
         )
     decoded = small_tokenizer.decode(output[0], skip_special_tokens=True)
 

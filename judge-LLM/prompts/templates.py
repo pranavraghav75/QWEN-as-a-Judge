@@ -26,12 +26,11 @@ def judge_prompt_nonthinking(question, mode, gpt_answer):
         "counting_and_probability": "counting and probability"
     }.get(mode, "mathematics")
 
-    return f"""You are a mathematical evaluator specailzing in  {topic}. You are NOT to assume the student's answer is correct. Instead, verify the answer independently based on your own math reasoning.
+    return f"""You are a mathematical evaluator specailzing in  {topic}. You are NOT to assume the student's answer is correct. Verify the student's answer based on your own math reasoning without any additional thinking.
 
     Instructions:
-    1) Respond with one of: correct, incorrect, or incomplete.
-    2) If the answer is incorrect or incomplete, add a very brief justification.
-
+    - Output EXACTLY ONE of: correct, incorrect, incomplete.
+    - If incorrect or incomplete, append a short justification in ONE sentence.
 
     Problem:
     {question}

@@ -113,7 +113,6 @@ def run_nonthinking_experiment(test_questions):
                     "judgment": judgment,
                     "mode": "algebra"
                 })
-                print(judgment)
             elif sample["topic"] == "number_theory":
                 prompt = judge_prompt_nonthinking(sample["question"], mode="number_theory", gpt_answer=sample["gpt4o_answer"])
                 judgment = judge_with_nonthinking_qwen(prompt)
@@ -249,13 +248,13 @@ def main():
     with open(GPT_OUTPUT, "r") as f:
         test_questions_with_answers = [json.loads(line) for line in f]
 
-    # print("##### Running Setup A #####")
-    # setup_a_results = run_experiment(test_questions_with_answers)
-    # print(f"Setup A results count: {len(setup_a_results)}")
-    # with open("results/setup_a.jsonl", "w") as f:
-    #     for result in setup_a_results:
-    #         f.write(json.dumps(result) + "\n")
-    # print("Setup A file written.")
+    print("##### Running Setup A #####")
+    setup_a_results = run_experiment(test_questions_with_answers)
+    print(f"Setup A results count: {len(setup_a_results)}")
+    with open("results/setup_a.jsonl", "w") as f:
+        for result in setup_a_results:
+            f.write(json.dumps(result) + "\n")
+    print("Setup A file written.")
 
     setup_b_results = run_nonthinking_experiment(test_questions_with_answers)
     print(f"Setup B results count: {len(setup_b_results)}")
